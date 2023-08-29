@@ -1,13 +1,17 @@
 <template>
   <div>
-    <h1>我是根组件</h1>
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import { reqLogin } from '../api/user'
+import { onMounted } from 'vue'
+onMounted(() => {
+  reqLogin({ username: 'admin', password: '111111' }).then((res) => {
+    console.log(res)
+  })
+})
 </script>
 
-<style>
-
-</style>
+<style lang="scss" scoped></style>
