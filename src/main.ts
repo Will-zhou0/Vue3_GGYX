@@ -13,6 +13,8 @@ import '@/styles/index.scss'
 import globalComponent from '@/components'
 // 引入路由
 import router from './router'
+// 引入状态管理 pinia
+import pinia from './store'
 
 const app = createApp(App)
 app.use(ElementPlus, {
@@ -21,4 +23,7 @@ app.use(ElementPlus, {
 app.use(globalComponent)
 // 注册路由
 app.use(router)
+// 注册pinia
+app.use(pinia)
+// 全局挂载
 app.mount('#app')
