@@ -3,7 +3,12 @@
     <el-row>
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
-        <el-form :model="loginForm" class="login_form">
+        <el-form
+          :model="loginForm"
+          class="login_form"
+          :rules="rules"
+          ref="loginFormRef"
+        >
           <h1>Hello</h1>
           <h2>欢迎来到网易有道</h2>
           <el-form-item prop="username">
@@ -40,7 +45,7 @@
 import { User, Lock } from '@element-plus/icons-vue'
 import { onMounted, reactive, ref } from 'vue'
 import { useUserStore } from '@/store/modules/user'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
 const userStore = useUserStore()
@@ -49,29 +54,48 @@ let loginForm = reactive({
   password: '',
 })
 let loading = ref(false)
+let loginFormRef = ref()
 const router = useRouter()
-const route = useRoute()
+const validatorName = (rule: any, value: any, callback: any) => {
+  if (value.length >= 5) {
+    callback()
+  } else {
+    callback(new Error('用户名长度必须大于等于 5 个字符'))
+  }
+}
+const validatorPass = (rule: any, value: any, callback: any) => {
+  if (value.length < 6) {
+    callback(new Error('密码长度必须大于等于 6 个字符'))
+  } else {
+    callback()
+  }
+}
+const rules = reactive({
+  username: [{ validator: validatorName, trigger: 'blur' }],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { validator: validatorPass, trigger: 'blur' },
+  ],
+})
 onMounted(() => {})
-const login = () => {
+const login = async () => {
+  await loginFormRef.value.validate()
   loading.value = true
-  userStore.userLogin(loginForm).then((res) => {
-    if (res === 'ok') {
-      console.log(router)
-      console.log(route)
-      router.push('/home')
-      ElNotification({
-        type: 'success',
-        message: '登录成功',
-        title: getTime() + '好',
-      })
-    } else {
-      ElNotification({
-        type: 'error',
-        message: res,
-      })
-    }
-    loading.value = false
-  })
+  try {
+    await userStore.userLogin(loginForm)
+    router.push('/')
+    ElNotification({
+      type: 'success',
+      message: '登录成功',
+      title: getTime() + '好',
+    })
+  } catch (err) {
+    ElNotification({
+      type: 'error',
+      message: (err as Error).message,
+    })
+  }
+  loading.value = false
 }
 </script>
 
