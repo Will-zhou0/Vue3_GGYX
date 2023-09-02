@@ -23,6 +23,8 @@ app.use(ElementPlus, {
 app.use(globalComponent)
 // 注册路由
 app.use(router)
+//引入路由鉴权文件
+import './permission'
 // 注册pinia
 app.use(pinia)
 // 全局挂载

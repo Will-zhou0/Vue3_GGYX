@@ -50,8 +50,8 @@ import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
 const userStore = useUserStore()
 let loginForm = reactive({
-  username: '',
-  password: '',
+  username: 'admin',
+  password: 'atguigu123',
 })
 let loading = ref(false)
 let loginFormRef = ref()

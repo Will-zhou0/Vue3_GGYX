@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import { reqLogin } from '@/api/user'
+import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 import type { UserState } from './type'
-import { SET_TOKEN, GET_TOKEN } from '@/utils/token'
+import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 // 引入数据类型
-import type { loginFormData, ResponseData } from '@/api/user/type'
+import type { loginFormData, loginResponseData, userInfoReponseData } from '@/api/user/type'
 // 引入路由（常量路由）
 import { constantRoutes } from '@/router/routes'
 // 创建用户相关的小仓库
@@ -13,6 +13,8 @@ export const useUserStore = defineStore('user', {
     return {
       token: GET_TOKEN() || '',
       menuRoutes: constantRoutes,
+      avatar: '',
+      username: '',
     }
   },
   // getters: {
@@ -21,15 +23,39 @@ export const useUserStore = defineStore('user', {
   // 异步|逻辑的地方
   actions: {
     async userLogin(data: loginFormData) {
-      const res: ResponseData = await reqLogin(data)
+      const res: loginResponseData = await reqLogin(data)
       // 登录成功，存储token
       if (res.code === 200) {
-        this.token = res.data.token
+        this.token = res.data
         // token持久化存储
         SET_TOKEN(res.data.token)
         return 'ok'
       } else {
-        return res.data.message
+        return Promise.reject(new Error(res.data))
+      }
+    },
+    // 获取用户信息
+    async userInfo() {
+      const res: userInfoReponseData = await reqUserInfo()
+      if (res.code === 200) {
+        // 这里的this指向当前的store
+        this.avatar = res.data.avatar
+        this.username = res.data.name
+        return 'ok'
+      } else {
+        return Promise.reject(new Error(res.message))
+      }
+    },
+    // 退出登录
+    async userLogout() {
+      const result: any = await reqLogout()
+      if (result.code === 200) {
+        this.avatar = ''
+        this.username = ''
+        this.token = ''
+        REMOVE_TOKEN()
+      } else {
+        return Promise.reject(new Error(result.message))
       }
     },
   },

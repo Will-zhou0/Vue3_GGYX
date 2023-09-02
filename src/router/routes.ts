@@ -14,7 +14,7 @@ export const constantRoutes = [
     component: () => import('@/layout/index.vue'),
     name: 'layout',
     meta: {
-      title: 'layout',
+      title: '',
       hidden: false,
       icon: '',
     },
@@ -51,6 +51,7 @@ export const constantRoutes = [
       hidden: false,
       icon: 'Lock',
     },
+    redirect: '/acl/role',
     children: [
       {
         path: '/acl/role',
@@ -93,6 +94,7 @@ export const constantRoutes = [
       hidden: false,
       icon: 'Goods',
     },
+    redirect: '/product/trademark',
     children: [
       {
         path: '/product/trademark',
