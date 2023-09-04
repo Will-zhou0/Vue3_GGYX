@@ -4,7 +4,7 @@ import type {
   loginFormData,
   loginResponseData,
   userInfoReponseData,
-} from './types'
+} from './type'
 //项目用户相关的请求地址
 enum API {
   LOGIN_URL = '/admin/acl/index/login',

@@ -54,16 +54,6 @@ export const constantRoutes = [
     redirect: '/acl/role',
     children: [
       {
-        path: '/acl/role',
-        name: 'role',
-        component: () => import('@/views/acl/role/index.vue'),
-        meta: {
-          title: '角色管理',
-          hidden: false,
-          icon: 'UserFilled',
-        },
-      },
-      {
         path: '/acl/user',
         name: 'user',
         component: () => import('@/views/acl/user/index.vue'),
@@ -71,6 +61,16 @@ export const constantRoutes = [
           title: '用户管理',
           hidden: false,
           icon: 'User',
+        },
+      },
+      {
+        path: '/acl/role',
+        name: 'role',
+        component: () => import('@/views/acl/role/index.vue'),
+        meta: {
+          title: '角色管理',
+          hidden: false,
+          icon: 'UserFilled',
         },
       },
       {
