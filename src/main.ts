@@ -8,6 +8,8 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import 'virtual:svg-icons-register'
 // 引入全局样式
 import '@/styles/index.scss'
+// 暗黑模式css样式
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 // 引入自定义插件
 import globalComponent from '@/components'
