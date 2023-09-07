@@ -19,8 +19,16 @@
       </el-form>
     </el-card>
     <el-card style="margin: 10px 0">
-      <el-button type="primary" @click="addUser">添加用户</el-button>
-      <el-button type="primary" @click="deleteSelectUser">批量删除</el-button>
+      <el-button type="primary" @click="addUser" v-has="`btn.User.add`">
+        添加用户
+      </el-button>
+      <el-button
+        type="primary"
+        @click="deleteSelectUser"
+        v-has="`btn.User.remove`"
+      >
+        批量删除
+      </el-button>
       <el-table
         border
         style="margin: 10px 0"
@@ -71,6 +79,7 @@
               size="small"
               icon="User"
               @click="setRole(scope.row)"
+              v-has="`btn.User.assgin`"
             >
               分配角色
             </el-button>
@@ -79,6 +88,7 @@
               size="small"
               icon="Edit"
               @click="updateUser(scope.row)"
+              v-has="`btn.User.update`"
             >
               编辑
             </el-button>
@@ -88,7 +98,12 @@
               @confirm="deleteUser(scope.row.id)"
             >
               <template #reference>
-                <el-button type="primary" size="small" icon="Delete">
+                <el-button
+                  type="primary"
+                  size="small"
+                  icon="Delete"
+                  v-has="`btn.User.remove`"
+                >
                   删除
                 </el-button>
               </template>

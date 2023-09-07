@@ -34,6 +34,7 @@ export const useUserStore = defineStore('user', {
       menuRoutes: constantRoutes,
       avatar: '',
       username: '',
+      buttons: [],
     }
   },
   // 异步|逻辑的地方
@@ -57,6 +58,7 @@ export const useUserStore = defineStore('user', {
         // 这里的this指向当前的store
         this.avatar = res.data.avatar
         this.username = res.data.name
+        this.buttons = res.data.buttons
         //计算当前用户需要展示的异步路由
         console.log(res.data.routes)
 

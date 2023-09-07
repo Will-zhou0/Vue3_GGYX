@@ -27,6 +27,9 @@ app.use(globalComponent)
 app.use(router)
 //引入路由鉴权文件
 import './permission'
+//引入自定义指令文件
+import { isHasButton } from '@/directive/has'
+isHasButton(app)
 // 注册pinia
 app.use(pinia)
 // 全局挂载
